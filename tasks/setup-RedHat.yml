@@ -2,15 +2,24 @@
 - name: Ensure dependencies are installed.
   yum: pkg=curl state=installed
 
-- name: Ensure Jenkins repo is installed.
-  get_url:
-    url: "{{ jenkins_repo_url }}"
-    dest: /etc/yum.repos.d/jenkins.repo
+- block:
+    - name: Ensure Jenkins repo is installed.
+      get_url:
+        url: "{{ jenkins_repo_url }}"
+        dest: /etc/yum.repos.d/jenkins.repo
 
-- name: Add Jenkins repo GPG key.
-  rpm_key:
-    state: present
-    key: "{{ jenkins_repo_key_url }}"
+    - name: Add Jenkins repo GPG key.
+      rpm_key:
+        state: present
+        key: "{{ jenkins_repo_key_url }}"
 
-- name: Ensure Jenkins is installed.
-  yum: pkg=jenkins state=installed
+    - name: Ensure Jenkins is installed.
+      yum: pkg=jenkins state=installed
+
+  when: jenkins_rpm_url is undefined
+
+- block:
+    - name: Install Jenkins rpm
+      yum: pkg={{jenkins_rpm_url}} state=installed
+
+  when: jenkins_rpm_url is defined
