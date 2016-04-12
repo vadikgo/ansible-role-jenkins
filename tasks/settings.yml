@@ -19,6 +19,22 @@
     line: '{{ jenkins_http_port_param }}={{ jenkins_http_port }}'
   register: jenkins_http_config
 
+- name: Create jenkins config.xml
+  template: src=templates/config.xml.j2 dest=/var/lib/jenkins/config.xml owner=jenkins
+
+- name: Create admin folder
+  file: path=/var/lib/jenkins/users/admin state=directory owner=jenkins
+
+- name: Create admin config.xml
+  template: src=templates/admin-config.xml.j2 dest=/var/lib/jenkins/users/admin/config.xml owner=jenkins
+
+- name: Unarchive Jenkins plugins
+  unarchive:
+      src: files/plugins.tar.gz
+      dest: /var/lib/jenkins/plugins
+      owner: jenkins
+      creates: /var/lib/jenkins/plugins/pam-auth
+
 - name: Immediately restart Jenkins on http config changes.
   service: name=jenkins state=restarted
   when: jenkins_http_config.changed
