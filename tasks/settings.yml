@@ -28,6 +28,9 @@
 - name: Create admin config.xml
   template: src=templates/admin-config.xml.j2 dest=/var/lib/jenkins/users/admin/config.xml owner=jenkins
 
+- name: Create plugins folder
+  file: path=/var/lib/jenkins/plugins state=directory owner=jenkins
+  
 - name: Unarchive Jenkins plugins
   unarchive:
       src: "{{jenkins_plugins_pack}}"
