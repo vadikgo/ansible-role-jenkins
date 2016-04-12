@@ -30,10 +30,11 @@
 
 - name: Unarchive Jenkins plugins
   unarchive:
-      src: files/plugins.tar.gz
+      src: "{{jenkins_plugins_pack}}"
       dest: /var/lib/jenkins/plugins
       owner: jenkins
       creates: /var/lib/jenkins/plugins/pam-auth
+      copy: "{{jenkins_plugins_pack | match('https*://.*') | ternary(False, True)}}"
 
 - name: Immediately restart Jenkins on http config changes.
   service: name=jenkins state=restarted
