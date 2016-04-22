@@ -16,10 +16,10 @@
     - name: Ensure Jenkins is installed.
       yum: pkg=jenkins state=installed
 
-  when: jenkins_rpm_url is undefined
+  when: jenkins_rpm_url == ""
 
 - block:
     - name: Install Jenkins rpm
       yum: pkg={{jenkins_rpm_url}} state=installed
 
-  when: jenkins_rpm_url is defined
+  when: jenkins_rpm_url != ""

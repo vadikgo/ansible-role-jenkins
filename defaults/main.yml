@@ -9,8 +9,8 @@ jenkins_plugins:
   - sonar
   - ssh
 jenkins_url_prefix: ""
-jenkins_rpm_url: ''
+jenkins_rpm_url: ""
 jenkins_admin_email: user@example.com
 jenkins_admin_password_hash: jbcrypt:$2a$10$XC7e3aQuO8udnWYbjtSvRusGEyeO7sxjqiQvmQQeizLxI53u.gWIe
 jenkins_admin_api_token: z6g0b+YoyYZLjdEiWhY5QAEY27H9xyUG5lq/Hn6tK5q43WjrmJlEnbAe5iMbVJyl
-jenkins_plugins_pack: http://10.21.25.212:8000/jenkins/plugins.tar.gz
+jenkins_plugins_pack: ""

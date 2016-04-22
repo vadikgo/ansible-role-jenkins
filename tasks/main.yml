@@ -51,4 +51,4 @@
   delay: 10
 
 - include: plugins.yml
-  when: jenkins_rpm_url is undefined
+  when: jenkins_rpm_url == ""
